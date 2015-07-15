@@ -21,6 +21,7 @@
         }
 
         public function delete($id) {
+            $id = intval($id);
             if ($this->method === "DELETE") {
                 try {
                     $this->response($this->userRepository->deleteUserById($id));

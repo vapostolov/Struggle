@@ -17,8 +17,8 @@
 
         }
 
-        public function deleteUser($id) {
-
+        public function deleteUserById($id) {
+            return $this->storage->delete($id);
         }
 
     }
