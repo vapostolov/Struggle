@@ -25,11 +25,15 @@ class FileStorage implements Storage {
     return $this->mapStringDataToObject($data);
   }
 
-  public function update($id, $data) {
-    throw new \Exception("Update method not implemented.");
+  public function delete($id) {
+    return $this->updateOrDelete($id);
   }
 
-  public function delete($id) {
+  public function update($id, $data) {
+    return $this->updateOrDelete($id, $this->mapObjectToStringData($data));
+  }
+
+  private function updateOrDelete($id, $data = null) {
     /* Thanks to https://www.daniweb.com/web-development/php/threads/102279/deleting-a-line-from-a-file#post1353582 */
 
     /*
@@ -62,7 +66,6 @@ class FileStorage implements Storage {
     $temp->flock(LOCK_EX);
     /*
      * Iterate over each line of the file only loading one line into memory at any point in time
-     * Use trim() on the line to ensure we don't have excess whitespace anywhere
      */
     foreach ($file as $key => $line) {
 
@@ -72,6 +75,8 @@ class FileStorage implements Storage {
          * Append a line ending to it
          */
         $temp->fwrite($line . PHP_EOL);
+      } else if ($data !== null) {
+            $temp->fwrite($data . PHP_EOL);
       }
     }
     /*
@@ -99,7 +104,15 @@ class FileStorage implements Storage {
 
   private function mapStringDataToObject($data) {
     $data = str_getcsv($data);
-    return $data;
+    $user = new User();
+    $user->name = $data[0];
+    $user->phone = $data[1];
+    $user->address = $data[2];
+    return $user;
+  }
+
+  private function mapObjectToStringData($object) {
+    return $object->name . "," . $object->phone . "," . $object->address;
   }
 
 }

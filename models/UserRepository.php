@@ -21,5 +21,18 @@
             return $this->storage->delete($id);
         }
 
+        public function updateUserById($id, $data) {
+            return $this->storage->update($id, $this->mapJsonDataToUser($data));
+        }
+
+        private function mapJsonDataToUser($data) {
+            $data = json_decode($data);
+            $user = new User();
+            $user->name = $data->name;
+            $user->phone = $data->phone;
+            $user->address = $data->address;
+            return $user;
+        }
+
     }
 ?>

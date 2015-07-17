@@ -32,5 +32,18 @@
                 $this->response("Method not applicable.");
             }
         }
+        
+        public function update($id, $data) {
+            if ($this->method === "PUT") {
+                try {
+                    $this->response($this->userRepository->updateUserById($id, $data));
+                } catch (Exception $e) {
+                    $this->response($e->getMessage(), "500");
+                }
+            } else {
+                $this->response("Method not applicable.");
+            }
+        }
+                
     }
 ?>
