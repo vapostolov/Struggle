@@ -1,11 +1,13 @@
 <?php
-    class Address extends ApiController{
+    namespace Example\Controllers;
+    
+    class Address extends \Struggle\Core\ApiController{
 
         private $userRepository;
 
         public function __construct() {
             parent::__construct();
-            $this->userRepository = new Example\Models\UserRepository(new Example\Models\FileStorage(ROOT_PARENT_DIRECTORY . "example.csv"));
+            $this->userRepository = new \Example\Models\UserRepository(new \Example\Models\FileStorage(ROOT_PARENT_DIRECTORY . "example.csv"));
         }
 
         public function get($id) {

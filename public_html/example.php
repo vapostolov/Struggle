@@ -19,13 +19,6 @@
     if (!is_dir(FRAMEWORK_DIRECTORY)) die ("Missing framework directory.");
 
     require_once(FRAMEWORK_DIRECTORY . "/Struggle.php");
-    require_once(FRAMEWORK_DIRECTORY . "/ApiController.php");
-
-    /* Temporary includes */
-    require_once(MODELS_DIRECTORY . "/User.php");
-    require_once(MODELS_DIRECTORY . "/Storage.php");
-    require_once(MODELS_DIRECTORY . "/FileStorage.php");
-    require_once(MODELS_DIRECTORY . "/UserRepository.php");
 
     Struggle($_GET["request"]);
 
