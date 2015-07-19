@@ -4,13 +4,20 @@
 
     class UserRepository {
         private $storage;
+        private $numberOfIORetries = 5;
 
         public function __construct($storage) {
             $this->storage = $storage;
         }
 
         public function getUserById($id) {
-            return $this->storage->read($id);
+            $user = false;
+            $retries = 0;
+            while ($user === false && $retries < $this->numberOfIORetries) {
+                $user = $this->storage->read($id);
+                $retries++;
+            }
+            return $user;
         }
 
         public function createUser($data) {

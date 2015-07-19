@@ -20,6 +20,8 @@ class FileStorage implements Storage {
       $file->seek($id);
       $data = $file->current();
       $file->flock(LOCK_UN);
+    } else {
+        return false;
     }
 
     return $this->mapStringDataToObject($data);
