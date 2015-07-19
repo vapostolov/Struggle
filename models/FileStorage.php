@@ -105,12 +105,16 @@ class FileStorage implements Storage {
   }
 
   private function mapStringDataToObject($data) {
-    $data = str_getcsv($data);
-    $user = new User();
-    $user->name = $data[0];
-    $user->phone = $data[1];
-    $user->address = $data[2];
-    return $user;
+    if ($data) {
+        $data = str_getcsv($data);
+        $user = new User();
+        $user->name = $data[0];
+        $user->phone = $data[1];
+        $user->address = $data[2];
+        return $user;
+    }
+
+    return null;
   }
 
   private function mapObjectToStringData($object) {
