@@ -11,7 +11,14 @@ class FileStorage implements Storage {
   }
 
   public function create($data) {
-    throw new \Exception("Create method not implemented.");
+    $file = new \SplFileObject($this->filename, "a");
+    if ($file->flock(LOCK_EX)) {
+      $file->fwrite($this->mapObjectToStringData($data) . PHP_EOL);
+      $file->flock(LOCK_UN);
+      return true;
+    } else {
+        return false;
+    }
   }
 
   public function read($id) {

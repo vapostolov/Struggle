@@ -32,7 +32,7 @@
                 $this->response("Method not applicable.");
             }
         }
-        
+
         public function update($id, $data) {
             if ($this->method === "PUT") {
                 try {
@@ -44,6 +44,18 @@
                 $this->response("Method not applicable.");
             }
         }
-                
+
+        public function create($data) {
+            if ($this->method === "POST") {
+                try {
+                    $this->response($this->userRepository->createUser($data));
+                } catch (Exception $e) {
+                    $this->response($e->getMessage(), "500");
+                }
+            } else {
+                $this->response("Method not applicable.");
+            }
+        }
+
     }
 ?>

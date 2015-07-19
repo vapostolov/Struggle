@@ -21,7 +21,13 @@
         }
 
         public function createUser($data) {
-
+            $success = false;
+            $retries = 0;
+            while ($success === false && $retries < $this->numberOfIORetries) {
+                $success = $this->storage->create($this->mapJsonDataToUser($data));
+                $retries++;
+            }
+            return $success;
         }
 
         public function deleteUserById($id) {
